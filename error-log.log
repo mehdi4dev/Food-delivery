@@ -1,0 +1,47 @@
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"errors":{"adminPassword":{"stringValue":"\"Promise { <pending> }\"","kind":"string","value":{},"path":"adminPassword","reason":null},"description":{"name":"ValidatorError","message":"Path `description` is required.","properties":{"message":"Path `description` is required.","type":"required","path":"description"},"kind":"required","path":"description"}},"_message":"restaurant validation failed","level":"error","message":"restaurant validation failed: adminPassword: Cast to string failed for value \"Promise { <pending> }\" at path \"adminPassword\", description: Path `description` is required. restaurant validation failed: adminPassword: Cast to string failed for value \"Promise { <pending> }\" at path \"adminPassword\", description: Path `description` is required.","stack":"ValidationError: restaurant validation failed: adminPassword: Cast to string failed for value \"Promise { <pending> }\" at path \"adminPassword\", description: Path `description` is required.\n    at model.Document.invalidate (C:\\Users\\mehdi\\Desktop\\food delivery\\node_modules\\mongoose\\lib\\document.js:2696:32)\n    at model.$set (C:\\Users\\mehdi\\Desktop\\food delivery\\node_modules\\mongoose\\lib\\document.js:1309:12)\n    at model.set [as adminPassword] (C:\\Users\\mehdi\\Desktop\\food delivery\\node_modules\\mongoose\\lib\\helpers\\document\\compile.js:172:19)\n    at create (C:\\Users\\mehdi\\Desktop\\food delivery\\app\\http\\controller\\restaurantController.js:23:33)"}
+{"message":"db connected","level":"info"}
+{"errors":{"adminPassword":{"stringValue":"\"Promise { <pending> }\"","kind":"string","value":{},"path":"adminPassword","reason":null},"description":{"name":"ValidatorError","message":"Path `description` is required.","properties":{"message":"Path `description` is required.","type":"required","path":"description"},"kind":"required","path":"description"}},"_message":"restaurant validation failed","level":"error","message":"restaurant validation failed: adminPassword: Cast to string failed for value \"Promise { <pending> }\" at path \"adminPassword\", description: Path `description` is required. restaurant validation failed: adminPassword: Cast to string failed for value \"Promise { <pending> }\" at path \"adminPassword\", description: Path `description` is required.","stack":"ValidationError: restaurant validation failed: adminPassword: Cast to string failed for value \"Promise { <pending> }\" at path \"adminPassword\", description: Path `description` is required.\n    at model.Document.invalidate (C:\\Users\\mehdi\\Desktop\\food delivery\\node_modules\\mongoose\\lib\\document.js:2696:32)\n    at model.$set (C:\\Users\\mehdi\\Desktop\\food delivery\\node_modules\\mongoose\\lib\\document.js:1309:12)\n    at model.set [as adminPassword] (C:\\Users\\mehdi\\Desktop\\food delivery\\node_modules\\mongoose\\lib\\helpers\\document\\compile.js:172:19)\n    at create (C:\\Users\\mehdi\\Desktop\\food delivery\\app\\http\\controller\\restaurantController.js:23:33)"}
+{"message":"db connected","level":"info"}
+{"errors":{"description":{"name":"ValidatorError","message":"Path `description` is required.","properties":{"message":"Path `description` is required.","type":"required","path":"description"},"kind":"required","path":"description"}},"_message":"restaurant validation failed","level":"error","message":"restaurant validation failed: description: Path `description` is required. restaurant validation failed: description: Path `description` is required.","stack":"ValidationError: restaurant validation failed: description: Path `description` is required.\n    at model.Document.invalidate (C:\\Users\\mehdi\\Desktop\\food delivery\\node_modules\\mongoose\\lib\\document.js:2696:32)\n    at C:\\Users\\mehdi\\Desktop\\food delivery\\node_modules\\mongoose\\lib\\document.js:2516:17\n    at C:\\Users\\mehdi\\Desktop\\food delivery\\node_modules\\mongoose\\lib\\schematype.js:1238:9\n    at processTicksAndRejections (node:internal/process/task_queues:76:11)"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
+{"message":"db connected","level":"info"}
