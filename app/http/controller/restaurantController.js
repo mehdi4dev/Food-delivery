@@ -1,5 +1,5 @@
 const restaurantModel=require("../../model/restaurantModel")
-const {validateCreateRestaurant,validateUpdateRestaurant}=require("../validator/restaurantValidator")
+const {validateCreateRestaurant,validateUpdateRestaurant,loginValidator,foodValidator}=require("../validator/restaurantValidator")
 const _=require("lodash")
 const bcrypt=require("bcrypt");
 const { set } = require("lodash");
@@ -21,6 +21,7 @@ class restaurantController{
         if(error) return res.status(400).send(error.message)
         let restaurant=new restaurantModel( _.pick(req.body,["name","description","address","adminUserName","adminPassword"]));
         const salt=await bcrypt.genSalt(10);
+        restaurant.adminPassword=await bcrypt.hash(restaurant.adminPassword,salt);
         restaurant=await restaurant.save();
         res.send(restaurant)
     }
@@ -39,6 +40,47 @@ class restaurantController{
         const id=req.params.id;
         await restaurantModel.findByIdAndRemove(id);
         res.status(200).send()
+    }
+    async login(req,res){
+        const { error } = loginValidator(req.body);
+        if (error) return res.status(400).send({ message: error.message });
+
+    let restaurant = await restaurantModel.findOne({ adminUserName: req.body.username });
+    if (!restaurant)
+      return res
+        .status(400)
+        .send({ message: 'کاربری با این نام کاربری یا پسورد یافت نشد' });
+
+    const result = await bcrypt.compare(req.body.password, restaurant.adminPassword);
+    if (!result)
+      return res
+        .status(400)
+        .send({ message: 'کاربری با این نام کاربری یا پسورد یافت نشد' });
+
+    const token = restaurant.generateAuthToken();
+    res.header('x-auth-token', token).status(200).send({ success: true });
+    
+    }
+    async addFood(req,res){
+        const { error }=foodValidator(req.body);
+        if(error) return res.status(400).send({ message: error.message });
+
+        let restaurant= await restaurantModel.findById(req.user._id);
+        if(!restaurant) return res.status(404).send("resturant does not found")
+        restaurant.menu=_.pick(req.body,["name","description","price"])
+        restaurant=await restaurant.save();
+        res.send(true);
+    }
+    async getFoodList(req,res){
+        const restaurant=await restaurantModel.findById(req.user._id);
+        if (!restaurant)
+         return res
+        .status(400)
+        .send({ message: 'کاربری با این نام کاربری یا پسورد یافت نشد' });
+
+        const food=restaurant.menu;
+        res.send(food)
+
     }
 }
 module.exports= new restaurantController;

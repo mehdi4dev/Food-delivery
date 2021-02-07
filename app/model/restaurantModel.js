@@ -1,5 +1,6 @@
 const mongoose=require("mongoose");
-
+const config=require("config")
+const jwt=require("jsonwebtoken");
 
 const schemaComment=new mongoose.Schema({
     user:{type:String,required:true},
@@ -12,7 +13,7 @@ const schemaFood=new mongoose.Schema({
     description:{type:String,required:true},
     price:{type:Number,required:true},
     pic:String,
-    score:Number,
+    score:{type:Number,required:true,default:0},
     comments:[schemaComment]
 })
 const schema=new mongoose.Schema({
@@ -35,6 +36,14 @@ const schema=new mongoose.Schema({
     adminUserName:{type:String,required:true},
     adminPassword:{type:String,required:true}   
 })
-
+schema.methods.generateAuthToken = function () {
+    const data = {
+      _id: this._id,
+      name: this.adminUserName,
+      role: "restaurant",
+    };
+  
+    return jwt.sign(data, config.get('jwtPrivateKey'));
+  };
 const model=mongoose.model("restaurant",schema);  
 module.exports = model;

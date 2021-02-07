@@ -1,0 +1,4 @@
+{
+  "databaseAddress": "address",
+  "jwtPrivateKey":"NodeCoursePrivateKey"
+}
