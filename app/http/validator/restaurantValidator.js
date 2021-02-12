@@ -3,8 +3,8 @@ Joi.objectId = require('joi-objectid')(Joi);
 
 const validateCreateRestaurant = (data) => {
   const schema = Joi.object({
-    name: Joi.string().required(),
     description: Joi.string().required(),
+    name: Joi.string().required(),
     address: Joi.string(),
     adminUserName: Joi.string().required(),
     adminPassword: Joi.string().required(),

@@ -1,22 +1,22 @@
 const restaurantModel=require("../../model/restaurantModel")
-const {validateCreateRestaurant,validateUpdateRestaurant,loginValidator,foodValidator}=require("../validator/restaurantValidator")
+const {validateCreateRestaurant,validateUpdateRestaurant,foodValidator}=require("../validator/restaurantValidator")
 const _=require("lodash")
 const bcrypt=require("bcrypt");
 const { set } = require("lodash");
 class restaurantController{
-    async getList(req,res){
+    async getRestaurantList(req,res){
         const restaurantList=await restaurantModel.find().select("name descrption score pic address adminUserName").limit(20);
         res.send(restaurantList)
 
     }
-    async getOne(req,res){
+    async getOneRestaurant(req,res){
         const id=req.params.id;
         const result=await restaurantModel.findById(id).select("-adminPassword");
         if(!result) return res.status(404).send("not found");
 
         res.send(result);
     }
-    async create(req,res){
+    async createRestaurant(req,res){
         const {error}=validateCreateRestaurant(req.body)
         if(error) return res.status(400).send(error.message)
         let restaurant=new restaurantModel( _.pick(req.body,["name","description","address","adminUserName","adminPassword"]));
@@ -25,7 +25,7 @@ class restaurantController{
         restaurant=await restaurant.save();
         res.send(restaurant)
     }
-    async update(req,res){
+    async updateRestaurant(req,res){
         const id=req.params.id;
         const {error}=validateUpdateRestaurant(req.body)
         if(error) return res.status(400).send(error.message)
@@ -36,30 +36,11 @@ class restaurantController{
         if(!result) return res.send("not found");
         res.send(_.pick(result,["name","description","address","adminUserName","adminPassword"]));
     }
-    async delete(req,res){
+    async deleteRestaurant(req,res){
         const id=req.params.id;
-        await restaurantModel.findByIdAndRemove(id);
+        console.log(id);
+        await restaurantModel.findByIdAndRemove(id) 
         res.status(200).send()
-    }
-    async login(req,res){
-        const { error } = loginValidator(req.body);
-        if (error) return res.status(400).send({ message: error.message });
-
-    let restaurant = await restaurantModel.findOne({ adminUserName: req.body.username });
-    if (!restaurant)
-      return res
-        .status(400)
-        .send({ message: 'کاربری با این نام کاربری یا پسورد یافت نشد' });
-
-    const result = await bcrypt.compare(req.body.password, restaurant.adminPassword);
-    if (!result)
-      return res
-        .status(400)
-        .send({ message: 'کاربری با این نام کاربری یا پسورد یافت نشد' });
-
-    const token = restaurant.generateAuthToken();
-    res.header('x-auth-token', token).status(200).send({ success: true });
-    
     }
     async addFood(req,res){
         const { error }=foodValidator(req.body);
@@ -67,20 +48,47 @@ class restaurantController{
 
         let restaurant= await restaurantModel.findById(req.user._id);
         if(!restaurant) return res.status(404).send("resturant does not found")
-        restaurant.menu=_.pick(req.body,["name","description","price"])
+        restaurant.menu.push( _.pick(req.body,["name","description","price"]))
         restaurant=await restaurant.save();
         res.send(true);
     }
     async getFoodList(req,res){
         const restaurant=await restaurantModel.findById(req.user._id);
         if (!restaurant)
-         return res
-        .status(400)
-        .send({ message: 'کاربری با این نام کاربری یا پسورد یافت نشد' });
+        return res.status(404).send("resturant does not found")
 
         const food=restaurant.menu;
+
         res.send(food)
 
+    }
+    async deleteFood(req,res){
+        const id=req.user._id;
+        const foodId=req.params.id;
+        const restaurant=await restaurantModel.findById(id);
+        restaurant.menu.id(foodId).remove();
+        await restaurant.save()
+        res.status(200).send()
+    }
+    async updateFood(req,res){
+        
+        let restaurant=await restaurantModel.findById(req.user._id);
+        if(!restaurant) return res.status(400).send({message:err.message})
+        const foodId=req.params.id
+        const foundFood=restaurant.menu.id(foodId);
+        console.log(foundFood);
+        if(foundFood)
+     {
+       if(req.body.name)
+        foundFood.name = req.body.name;
+        if(req.body.description)
+        foundFood.description = req.body.description;
+        if(req.body.price)
+        foundFood.price = req.body.price;
+     }
+     console.log(restaurant);
+        restaurant=await restaurant.save();
+        res.status(200).send(restaurant.menu)
     }
 }
 module.exports= new restaurantController;

@@ -46,4 +46,5 @@ schema.methods.generateAuthToken = function () {
     return jwt.sign(data, config.get('jwtPrivateKey'));
   };
 const model=mongoose.model("restaurant",schema);  
+
 module.exports = model;
