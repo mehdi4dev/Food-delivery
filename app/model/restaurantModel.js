@@ -5,7 +5,7 @@ const jwt=require("jsonwebtoken");
 const schemaComment=new mongoose.Schema({
     user:{type:String,required:true},
     text:{type:String,required:true},
-    score:Number
+    score:{type:Number,required:true,default:0}
 })
 
 const schemaFood=new mongoose.Schema({

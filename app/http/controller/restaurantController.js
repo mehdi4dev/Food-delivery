@@ -1,5 +1,5 @@
 const restaurantModel=require("../../model/restaurantModel")
-const {validateCreateRestaurant,validateUpdateRestaurant,foodValidator}=require("../validator/restaurantValidator")
+const {validateCreateRestaurant,validateUpdateRestaurant,foodValidator,commentValidator}=require("../validator/restaurantValidator")
 const _=require("lodash")
 const bcrypt=require("bcrypt");
 const { set } = require("lodash");
@@ -90,5 +90,17 @@ class restaurantController{
         restaurant=await restaurant.save();
         res.status(200).send(restaurant.menu)
     }
+    async addComment(req,res){
+        const {error}=commentValidator(req.body);
+        if(error) return res.status(200).send({message:error.message})
+
+        let restaurant=await restaurantModel.findById(req.params.id)
+        if(!restaurant) return res.status(400).send("the restaurant does not found")
+        console.log(restaurant);
+         restaurant.comments.push(_.pick(req.body,["user","text","score"]))
+        restaurant=await restaurant.save();
+        res.status(200).send(true)
+    }
+    
 }
 module.exports= new restaurantController;

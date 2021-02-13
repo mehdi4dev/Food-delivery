@@ -23,7 +23,7 @@ const validateUpdateRestaurant = (data) => {
   });
   return schema.validate(data);
 };
-const loginValidator = (data) => {
+const restaurantAdminLoginValidator = (data) => {
   const schema = Joi.object({
     username: Joi.string().required(),
     password: Joi.string().required(),
@@ -38,4 +38,13 @@ const foodValidator=(data)=>{
   })
   return schema.validate(data)
 }
-module.exports = { validateCreateRestaurant,validateUpdateRestaurant,loginValidator,foodValidator };
+const commentValidator=(data)=>{
+  const schema=Joi.object({
+    user:Joi.string().required(),
+    text:Joi.string().required(),
+    score:Joi.number().required()
+    
+  })
+  return schema.validate(data)
+}
+module.exports = { validateCreateRestaurant,validateUpdateRestaurant,restaurantAdminLoginValidator,foodValidator,commentValidator };
