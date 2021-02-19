@@ -25,7 +25,7 @@ class usersController{
         .send({ message: 'کاربری با این نام کاربری یا پسورد یافت نشد' });
 
     const token = restaurant.generateAuthToken();
-    res.header('x-auth-token', token).status(200).send({ success: true });
+    res.header("Access-Control-Expose-headers", "x-auth-token").header('x-auth-token', token).status(200).send({ success: true });
     
     }
     async login (req,res){
@@ -39,7 +39,7 @@ class usersController{
       if(!pass) return res.status(400).send("invalid username/password");
 
       const token=user.generateAuthToken();
-      res.header('x-auth-token',token).send({success:true})
+      res.header("Access-Control-Expose-headers", "x-auth-token").header('x-auth-token',token).send({success:true})
       
     }
     async register (req,res){
@@ -54,8 +54,20 @@ class usersController{
       user.password=await bcrypt.hash(user.password,salt);
       user=await user.save()
       const token=user.generateAuthToken();
-      res.header('x-auth-token',token).status(200).send(user)
+      res.header("Access-Control-Expose-headers", "x-auth-token").header('x-auth-token',token).status(200).send(user)
 
+    }
+    async updateBasket (req,res){
+      const basketBody=_.pick(req.body,["restaurantId","restaurantName","foods"]);
+      if(!basketBody.foods) return res.send("no foods")
+      if (!basketBody.restaurantId || !basketBody.restaurantName) return res.send("need restaurant info")
+
+      const user=await userModel.findById(req.user._id)
+      if(!user) return res.send("your not login")
+
+      user.baskt=basketBody
+      await user.save()
+      res.send(200)
     }
 }
 module.exports= new usersController;

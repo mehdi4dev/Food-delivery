@@ -9,5 +9,5 @@ router.get("/:id",restaurantController.getFoodList);
 router.post("/login",[Auth,User],userController.login);
 router.post("/register",userController.register);
 router.post("/addcomment/:id",[Auth,User],restaurantController.addComment);
-// router.post("/login",controller.register);
+router.post("/basket",[Auth,User],userController.updateBasket);
 module.exports =router
